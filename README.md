@@ -36,7 +36,7 @@ cd python-nginx-app
 return '<h1>Coding Black Females - DevOps Course - <<replace with your name>> App-1 :) </h1>'
 ```
 
-## Development
+## Local Testing
 The Compose file is a YAML file defining services, networks, and volumes for a Docker application.
 
 Once the updated is completed, run the command below:
