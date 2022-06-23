@@ -15,8 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build ./app-1 -t voa2000/flask-app-1
-      
-    - name: Push the Docker image
-      run: docker push voa2000/flask-app-1
+      run: |
+        docker login -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_SECRET }} 
+        docker build ./app-1  -t voa2000/flask-app-1
+        docker push voa2000/flask-app-1
 
