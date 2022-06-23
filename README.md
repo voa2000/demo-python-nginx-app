@@ -21,8 +21,8 @@ To use this starter project:
 
 - Clone this repo to a local directory
 ```bash
-git clone git@github.com:voa2000/devops-cloud-sample-app.git
-cd devops-cloud-sample
+git clone https://github.com/CodingBlackFemales/python-nginx-app.git
+cd python-nginx-app
 ```
 
 ## Development
