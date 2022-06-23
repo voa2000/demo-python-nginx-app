@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  app1:
+    build: ./app-1
+    ports:
+      - "5001:5000"
+  app2:
+    build: ./app-2
+    ports:
+      - "5002:5000"
+  nginx:
+    build: ./nginx
+    ports:
+      - "8080:80"
+    depends_on:
+      - app-1
+      - app-2
+  # jenkins-image:
+  #   image: jenkins/jenkins:2.356
+  #   ports:
+  #     - target: 8080
+  #       published: 5003
+
