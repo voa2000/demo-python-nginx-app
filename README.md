@@ -37,23 +37,27 @@ return '<h1>Coding Black Females - DevOps Course - <<replace with your name>> Ap
 ```
 
 ## Development
+The Compose file is a YAML file defining services, networks, and volumes for a Docker application.
 
-Once the updated completed, run the command below:
+Once the updated is completed, run the command below:
 
-### 
-```bash 
-docker-compose up
-```
-- Creates three images, App-1, App-2, Nginx to deploys them as containers.
+# 
+```bash docker compose -f "docker-compose.yaml" up -d --build ```
+- This creates a three images, App-1, App-2, Nginx to deploys them as containers.
 - The applications can be access at  `localhost:8080` which is an nginx loadbalanced endpoint which will show either applcation.
+
+```bash docker compose -f "docker-compose.yaml" down ```
+- Destroys the cluster by removing all containers.
+
+```bash curl localhost:8080 ```
+- curl is a tool to transfer data from or to a server and supports protocols such as HTTP,HTTPS, FTP,etc.
 
 ## Troubleshooting
 
 - If docker-compose up fails:
   -  it might be because docker is not running
   - open docker desktop, wait to docker to become ready
-  - run  ```docker-compose down``` then ```docker-compose up```
-
+  - run  ```docker compose -f "docker-compose.yaml" down``` then ```docker compose -f "docker-compose.yaml" up -d --build```
 
 [1]: https://pypi.org/project/Flask/
 [2]: http://nginx.org/en/docs/beginners_guide.html
