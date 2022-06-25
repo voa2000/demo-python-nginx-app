@@ -33,7 +33,7 @@ cd python-nginx-app
 **For example, in app-1 folder, app-1.py line can be modified to:**
 
 ```bash
-return '<h1>Coding Black Females - DevOps Course - <<replace with your name>> App-1 :) </h1>'
+return '<h1>Viv  is Coding Black Females - DevOps Course - <<replace with your name>> App-1 :) </h1>'
 ```
 
 ## Local Testing
