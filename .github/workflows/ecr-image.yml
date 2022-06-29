@@ -34,7 +34,8 @@ jobs:
         ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
         ECR_REPOSITORY: "demo-python-nginx-app"
       run: |
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY app-1/Dockerfile
+        cd app-1/
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY 
         echo $ECR_REGISTRY/$ECR_REPOSITORY 
         
