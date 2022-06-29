@@ -1,18 +1,47 @@
-name: Docker Image CI
+name: Deploy image to AWS ECR
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-
+# Run this workflow every time a new tag is created
+on: 
+  create:
+    tags:
+      - .*
 jobs:
-
-  build:
-
+  ecr:
+    name: build and deploy image to AWS ECR
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+          
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Check out code
+        uses: actions/checkout@v2
+      - name: Set Tag Number
+        id: tag-number
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+      - name: Check Tag Release
+        env:
+          RELEASE_VERSION: ${{ steps.tag-number.outputs.tag }}
+          REPO_NAME: "demo-python-nginx-app"
+        run: |
+          echo $RELEASE_VERSION
+          echo ${{ steps.vars.outputs.tag }}
+        
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+          ECR_REPOSITORY: $REPO_NAME
+          IMAGE_TAG: ${{ steps.tag-number.outputs.tag }}
+        run: |
+          docker build -t $REPO_NAME .
+          docker tag $REPO_NAME:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          
