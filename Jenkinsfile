@@ -8,11 +8,14 @@ environment {
 		tag           = "${env.BUILD_NUMBER}"
 	}    
     stages {
-        stage('Checkout') { 
-            steps { 
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/voa2000/demo-python-nginx-app.git']]])
-            }
-        }
+        // stage('Checkout') { 
+        //     steps { 
+        //         checkout([$class: 'GitSCM', 
+        //         branches: [[name: '*/master']], 
+        //         extensions: [], 
+        //         userRemoteConfigs: [[url: 'https://github.com/voa2000/demo-python-nginx-app.git']]])
+        //     }
+        // }
         stage('Build'){
             steps {
                  sh '''
