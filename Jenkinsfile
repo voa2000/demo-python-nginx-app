@@ -6,6 +6,7 @@ pipeline {
 environment {
 		DOCKERHUB_CREDENTIALS=credentials('DOCKER_HUB')
 		tag           = "${env.BUILD_NUMBER}"
+        
 	}    
     stages {
         // stage('Checkout') { 
@@ -20,7 +21,9 @@ environment {
             steps {
                  sh '''
              #!/bin/bash
-             docker build -t voa2000/nginx-demo:$tag nginx/.
+             docker build -t voa2000/nginx-demo:nginx$tag nginx/.
+             docker build -t voa2000/nginx-demo:app-1$tag app-1/.
+             docker build -t voa2000/nginx-demo:app-2$tag app-2/.
              docker images
          '''
             }
@@ -32,7 +35,12 @@ environment {
 		}
 		stage('Push') {
         steps {
-				sh 'docker push voa2000/nginx-demo:$tag'
+				sh '''
+                #!/bin/bash
+                    docker push voa2000/nginx-demo:nginx$tag
+                    docker push voa2000/nginx-demo:app-1$tag
+                    docker push voa2000/nginx-demo:app-2$tag
+                '''
 			}
      }
  }
