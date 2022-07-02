@@ -9,15 +9,15 @@ environment {
         
 	}    
     stages {
-        // stage('Checkout') { 
-        //     steps { 
-        //         checkout([$class: 'GitSCM', 
-        //         branches: [[name: '*/master']], 
-        //         extensions: [], 
-        //         userRemoteConfigs: [[url: 'https://github.com/voa2000/demo-python-nginx-app.git']]])
-        //     }
-        // }
-        stage('Build'){
+        stage('Checkout Source Code') { 
+            steps { 
+                checkout([$class: 'GitSCM', 
+                branches: [[name: '*/master']], 
+                extensions: [], 
+                userRemoteConfigs: [[url: 'https://github.com/voa2000/demo-python-nginx-app.git']]])
+            }
+        }
+        stage('Build Images'){
             steps {
                  sh '''
              #!/bin/bash
@@ -28,18 +28,20 @@ environment {
          '''
             }
         }
-        stage('Login') {
+        stage('Login to DockerHub') {
 			steps {
 				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
 			}
 		}
-		stage('Push') {
+		stage('Push to DockerHub') {
         steps {
 				sh '''
                 #!/bin/bash
+                    echo "###### Pushing Image images to DockerHub !! ######";
                     docker push voa2000/nginx-demo:nginx$tag
                     docker push voa2000/nginx-demo:app-1$tag
                     docker push voa2000/nginx-demo:app-2$tag
+                    echo "###### Image Publish to DockerHub Complete!! ######";
                 '''
 			}
      }
