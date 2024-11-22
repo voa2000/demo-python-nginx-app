@@ -5,4 +5,4 @@ webapp = Flask(__name__)
 def hello_world():
   return 'ArgoCD course, this is Webapp :) '
 if __name__ == '__main__':
-  webapp.run(debug=True, host='0.0.0.0')
+  webapp.run(debug=True, port=8000,host='0.0.0.0')
